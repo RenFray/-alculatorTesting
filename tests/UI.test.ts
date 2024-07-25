@@ -7,8 +7,13 @@ describe('Home Page Tests', () => {
     let homePage: HomePage;
 
     beforeAll(async () => {
-        browser = await puppeteer.launch({ headless: false }); // Запускаем браузер в видимом режиме
+        browser = await puppeteer.launch({
+            headless: false,
+            args: ['--start-maximized'],
+            defaultViewport: null
+        });
         page = await browser.newPage();
+        await page.setViewport({ width: 1920, height: 1080 });
         homePage = new HomePage(page);
     });
 
@@ -16,35 +21,35 @@ describe('Home Page Tests', () => {
         await browser.close();
     });
 
-    test('Header should be visible', async () => {
+    test('Хедер виден', async () => {
         await page.goto('https://onliner.by', { waitUntil: 'networkidle0' });
         const isVisible = await homePage.isHeaderVisible();
         expect(isVisible).toBe(true);
-    }, 20000); // Увеличиваем таймаут до 20 секунд
+    }, 10000);
 
-    test('Search should return results', async () => {
+    test('Поиск возвращает результаты', async () => {
         await page.goto('https://onliner.by', { waitUntil: 'networkidle0' });
         await homePage.search('телефон');
-        const isSearchResultVisible = await homePage.isSearchResultVisible();
-        expect(isSearchResultVisible).toBe(true);
-    }, 30000); // Увеличиваем таймаут до 30 секунд
+        const areListItemsVisible = await homePage.areListItemsVisible();
+        expect(areListItemsVisible).toBe(true);
+    }, 50000);
 
-    test('Text content of a specific element should be as expected', async () => {
+    test('Ссылка в логотипе содержить необходимый текст', async () => {
         await page.goto('https://onliner.by', { waitUntil: 'networkidle0' });
-        const text = await homePage.getText('a.logo__link span');
-        expect(text.trim()).toBe('Onliner'); // Исправляем ожидаемое значение текста
-    }, 20000); // Увеличиваем таймаут до 20 секунд
+        const href = await homePage.getHref('.b-top-logo a[href]');
+        expect(href).toContain('www.onliner.by');
+    }, 5000);
 
-    test('Ensure presence of navigation menu', async () => {
+    test('Навигационное меню отображается', async () => {
         await page.goto('https://onliner.by', { waitUntil: 'networkidle0' });
         const isNavVisible = await page.$('.b-main-navigation') !== null;
         expect(isNavVisible).toBe(true);
-    }, 20000); // Увеличиваем таймаут до 20 секунд
+    }, 5000);
 
-    test('Footer should be visible', async () => {
+    test('Футер отображается', async () => {
         await page.goto('https://onliner.by', { waitUntil: 'networkidle0' });
-        const isFooterVisible = await page.$('footer') !== null;
+        const isFooterVisible = await page.$('footer.g-bottom') !== null;
         expect(isFooterVisible).toBe(true);
-    }, 20000); // Увеличиваем таймаут до 20 секунд
+    }, 5000);
 });
 
