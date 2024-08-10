@@ -12,6 +12,8 @@ export default defineConfig({
     headless: false,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    baseURL: 'https://playwright.dev'
-  }
+    baseURL: 'https://playwright.dev',
+    reporter: [["html"], ["allure-playwright",{detail:true}]],
+    trace: 'on'
+  },
 });
