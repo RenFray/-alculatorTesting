@@ -3,8 +3,6 @@ import { BasePage } from '../pages/basePage';
 import { HomePage } from '../pages/homePage';
 import { BASE_URL } from '../utils/constants';
 
-test.describe('UI Tests for Playwright Documentation part 2', () => {
-
    test.describe('Docs Page Tests', () => {
 
         test.beforeEach(async ({ page }) => {
@@ -42,6 +40,4 @@ test.describe('UI Tests for Playwright Documentation part 2', () => {
             await homePage.sidebarItem.click();
             expect(page.url()).toContain('/docs/test-assertions');
         });
-
-    });
-});
+   });

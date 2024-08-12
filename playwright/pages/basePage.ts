@@ -1,4 +1,5 @@
 import { Page } from '@playwright/test';
+import { BASE_URL } from '../utils/constants';
 
 export class BasePage {
     readonly page: Page;
@@ -8,6 +9,6 @@ export class BasePage {
     }
 
     async goto(url: string = '/') {
-        await this.page.goto(url);
+        await this.page.goto(`${BASE_URL}${url}`);
     }
 }

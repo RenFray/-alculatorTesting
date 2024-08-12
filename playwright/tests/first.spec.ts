@@ -3,7 +3,6 @@ import { BasePage } from '../pages/basePage';
 import { HomePage } from '../pages/homePage';
 import { BASE_URL } from '../utils/constants';
 
-test.describe('UI Tests for Playwright Documentation part 1', () => {
 
   test.describe('Home Page Tests', () => {
 
@@ -13,8 +12,6 @@ test.describe('UI Tests for Playwright Documentation part 1', () => {
     });
 
     test('should navigate to the homepage', async ({ page }) => {
-      const basePage = new BasePage(page);
-      await basePage.goto();
       expect(page.url()).toBe(`${BASE_URL}/`);
     });
 
@@ -42,4 +39,4 @@ test.describe('UI Tests for Playwright Documentation part 1', () => {
       await expect(homePage.getStartedButton).toBeVisible();
     });
   });
-});
+
